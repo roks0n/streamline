@@ -1,5 +1,6 @@
 from functools import wraps
 from flask import g, request, redirect, url_for, session, render_template
+from helpers import streamline
 
 
 def templated(template=None):
@@ -10,14 +11,12 @@ def templated(template=None):
             if template_name is None:
                 template_name = request.endpoint \
                                     .replace('.', '/') + '.html'
-            print template_name
             ctx = f(*args, **kwargs)
             if ctx is None:
                 ctx = {}
             elif not isinstance(ctx, dict):
                 return ctx
-
-            return render_template(template_name)
+            return render_template(template_name, **ctx)
 
         return decorated_function
 

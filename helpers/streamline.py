@@ -4,10 +4,10 @@ from subprocess import Popen, PIPE
 import datetime
 import psutil
 import time
-from re import split
+from re import split, search
 
 
-def open_stream(token, token_secret, consumer_key, consumer_secret, hashtags, run_mode='background'):
+def open_stream(token, token_secret, consumer_key, consumer_secret, hashtags, run_mode='normal'):
     """
     run_mode:
     - background: nothing is printed into console, runs as background process
@@ -49,6 +49,9 @@ def get_open_streams():
 
     for line in sub_proc.stdout:
          if 'open_stream.py' in line:
+            # Get hashtag from line
+            hashtags = search('-tt=(.*)$', line).group(1)
+
             # The separator for splitting is 'variable number of spaces'
             proc_info = split(" *", line.strip())
             proc_list.append({
@@ -63,8 +66,9 @@ def get_open_streams():
                 'start': proc_info[8],
                 'time': proc_info[9],
                 'cmd': proc_info[10],
-                'hashtags': split('=', proc_info[16])[1]
+                'hashtags': hashtags
             })
+
     return proc_list
 
 def kill_stream(pid=None):
@@ -78,3 +82,8 @@ def kill_stream(pid=None):
     else:
         return 'Process "%s" killed!' % pid
 
+open_stream('220122822-tJWVqwm9HiowTSdSBwQxXCogo3C6rnQcSMLWAaHB',
+            'A0fZr1JPpMrVqGyC6NIb9VxN2ifRFn9uyeTNvKdlEqpkS',
+            'lztOXdMgVyoUiWp1EJtMQL1rb',
+            '3nY6uhBpcUwAaLb0eyEb0sTsQCIe4Wj0ExoIKY9jxuQvOIgCUF',
+            '#facebook, #fb')

@@ -1,2 +1,4 @@
+Flask==0.10.1
+Jinja2==2.7.2
 git+https://github.com/sixohsix/twitter
 psutil

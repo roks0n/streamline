@@ -6,6 +6,29 @@
 
 {% block content %}
 
-    {{ collection }}
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>PID</th>
+                        <th>Start Time</th>
+                        <th>#hashtags</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proc in procs %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ proc.pid }}</td>
+                        <td>{{ proc.start }}</td>
+                        <td>{{ proc.hashtags }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}
