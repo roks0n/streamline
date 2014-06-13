@@ -82,8 +82,8 @@ def kill_stream(pid=None):
     else:
         return 'Process "%s" killed!' % pid
 
-open_stream('220122822-tJWVqwm9HiowTSdSBwQxXCogo3C6rnQcSMLWAaHB',
-            'A0fZr1JPpMrVqGyC6NIb9VxN2ifRFn9uyeTNvKdlEqpkS',
-            'lztOXdMgVyoUiWp1EJtMQL1rb',
-            '3nY6uhBpcUwAaLb0eyEb0sTsQCIe4Wj0ExoIKY9jxuQvOIgCUF',
-            '#facebook, #fb')
+# open_stream('220122822-tJWVqwm9HiowTSdSBwQxXCogo3C6rnQcSMLWAaHB',
+#             'A0fZr1JPpMrVqGyC6NIb9VxN2ifRFn9uyeTNvKdlEqpkS',
+#             'lztOXdMgVyoUiWp1EJtMQL1rb',
+#             '3nY6uhBpcUwAaLb0eyEb0sTsQCIe4Wj0ExoIKY9jxuQvOIgCUF',
+#             '#facebook, #fb')

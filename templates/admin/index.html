@@ -15,6 +15,7 @@
                         <th>PID</th>
                         <th>Start Time</th>
                         <th>#hashtags</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,6 +25,7 @@
                         <td>{{ proc.pid }}</td>
                         <td>{{ proc.start }}</td>
                         <td>{{ proc.hashtags }}</td>
+                        <td><a href="{{ url_for('portal.close_stream', pid=proc.pid) }}" class="btn btn-danger">Close</button></a>
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -1,8 +1,3 @@
-"""
-Example program for the Stream API. This prints public status messages
-from the "sample" stream as fast as possible. Use -h for help.
-"""
-
 from __future__ import print_function
 
 import argparse
