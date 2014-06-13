@@ -25,3 +25,4 @@ def adminIndex():
     # }]
     data = 'test'
     return dict(collection=data)
+
