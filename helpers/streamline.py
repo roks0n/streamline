@@ -14,11 +14,6 @@ def listen_stream(hashtags, run_mode='normal'):
     - normal: you get output into console, not a background process
     """
 
-    token = ''
-    token_secret = ''
-    consumer_key = ''
-    consumer_secret = ''
-
     location = os.path.dirname(os.path.realpath(__file__))
     args = []
 

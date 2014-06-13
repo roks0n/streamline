@@ -8,5 +8,7 @@ app.config['DEBUG'] = True
 
 app.register_blueprint(portal)
 
+app.config.from_object('config')
+
 app.run(debug=True)
 
