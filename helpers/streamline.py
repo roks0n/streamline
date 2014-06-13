@@ -7,27 +7,26 @@ import time
 from re import split, search
 
 
-def open_stream(token, token_secret, consumer_key, consumer_secret, hashtags, run_mode='normal'):
+def listen_stream(hashtags, run_mode='normal'):
     """
     run_mode:
     - background: nothing is printed into console, runs as background process
     - normal: you get output into console, not a background process
-
-    open_stream('220122822-tJWVqwm9HiowTSdSBwQxXCogo3C6rnQcSMLWAaHB',
-            'A0fZr1JPpMrVqGyC6NIb9VxN2ifRFn9uyeTNvKdlEqpkS',
-            'lztOXdMgVyoUiWp1EJtMQL1rb',
-            '3nY6uhBpcUwAaLb0eyEb0sTsQCIe4Wj0ExoIKY9jxuQvOIgCUF',
-            '#facebook, #fb',
-            'background')
     """
 
+    token = ''
+    token_secret = ''
+    consumer_key = ''
+    consumer_secret = ''
+
+    location = os.path.dirname(os.path.realpath(__file__))
     args = []
 
     if 'background' in run_mode:
         args.append('nohup')
 
     args.extend(('python',
-                '../utils/open_stream.py',
+                location + '/../utils/open_stream.py',
                 '-t=' + token,
                 '-ts=' + token_secret,
                 '-ck=' + consumer_key,
@@ -82,8 +81,10 @@ def kill_stream(pid=None):
     else:
         return 'Process "%s" killed!' % pid
 
-# open_stream('220122822-tJWVqwm9HiowTSdSBwQxXCogo3C6rnQcSMLWAaHB',
-#             'A0fZr1JPpMrVqGyC6NIb9VxN2ifRFn9uyeTNvKdlEqpkS',
-#             'lztOXdMgVyoUiWp1EJtMQL1rb',
-#             '3nY6uhBpcUwAaLb0eyEb0sTsQCIe4Wj0ExoIKY9jxuQvOIgCUF',
-#             '#facebook, #fb')
+
+"""
+TODOS:
+- only one stream can be opened per token key / consumer (check which!)
+- if stream already opened, don't make another one
+- error logging & put silen output into log files also
+"""

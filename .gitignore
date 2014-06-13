@@ -45,3 +45,4 @@ docs/_build/
 
 # OTHER
 .DS_Store
+*.out
