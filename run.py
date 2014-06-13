@@ -4,7 +4,6 @@ from apps.portal import portal
 
 
 app = Flask(__name__)
-app.config['DEBUG'] = True
 
 app.register_blueprint(portal)
 

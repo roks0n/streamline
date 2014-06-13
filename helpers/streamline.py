@@ -4,8 +4,11 @@ from subprocess import Popen, PIPE
 import datetime
 import psutil
 import time
-from re import split, search
+from re import search, split
 
+from flask import Flask
+app = Flask(__name__)
+app.config.from_object('config')
 
 def listen_stream(hashtags, run_mode='normal'):
     """
@@ -13,6 +16,11 @@ def listen_stream(hashtags, run_mode='normal'):
     - background: nothing is printed into console, runs as background process
     - normal: you get output into console, not a background process
     """
+
+    TOKEN = app.config.get('TOKEN')
+    TOKEN_SECRET = app.config.get('TOKEN_SECRET')
+    CONSUMER_KEY = app.config.get('CONSUMER_KEY')
+    CONSUMER_SECRET = app.config.get('CONSUMER_SECRET')
 
     location = os.path.dirname(os.path.realpath(__file__))
     args = []
@@ -22,10 +30,10 @@ def listen_stream(hashtags, run_mode='normal'):
 
     args.extend(('python',
                 location + '/../utils/open_stream.py',
-                '-t=' + token,
-                '-ts=' + token_secret,
-                '-ck=' + consumer_key,
-                '-cs=' + consumer_secret,
+                '-t=' + TOKEN,
+                '-ts=' + TOKEN_SECRET,
+                '-ck=' + CONSUMER_KEY,
+                '-cs=' + CONSUMER_SECRET,
                 '-tt=' + hashtags))
 
     process = Popen(args)
