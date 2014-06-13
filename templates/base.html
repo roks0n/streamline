@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Streamline</title>
+        <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,7 +32,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="#">Streamline Project</a>
+                            <a class="navbar-brand" href="#">{% block navbar %}Streamline{% endblock %}</a>
                         </div>
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -44,11 +44,12 @@
                     </nav>
                 </div>
             </div>
-        </div>
 
-        {% block content %}
-        <h1>base.html</h1>
-        {% endblock %}
+            {% block content %}
+            <h1>base.html</h1>
+            {% endblock %}
+
+        </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>

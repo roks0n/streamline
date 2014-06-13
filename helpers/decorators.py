@@ -1,3 +1,7 @@
+from functools import wraps
+from flask import g, request, redirect, url_for, session, render_template
+
+
 def templated(template=None):
     def decorator(f):
         @wraps(f)
