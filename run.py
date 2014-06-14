@@ -11,7 +11,7 @@ app.register_blueprint(portal)
 app.config.from_object('config')
 
 # Logging
-file_handler = logging.FileHandler('error.log')
+file_handler = logging.FileHandler(app.config['BASE_DIR'] + '/var/logs/debug.log')
 file_handler.setFormatter(logging.Formatter(
     '%(asctime)s %(levelname)s: %(message)s '
     '[in %(pathname)s:%(lineno)d]'
