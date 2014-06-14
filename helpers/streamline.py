@@ -6,7 +6,6 @@ import datetime
 import psutil
 import time
 from re import search, split
-
 from flask import current_app
 
 def listen_stream(hashtags, run_mode='normal'):
@@ -16,33 +15,35 @@ def listen_stream(hashtags, run_mode='normal'):
     - normal: you get output into console, not a background process
     """
 
+    if not is_stream_open(hashtags):
+        TOKEN = current_app.config['TOKEN']
+        TOKEN_SECRET = current_app.config['TOKEN_SECRET']
+        CONSUMER_KEY = current_app.config['CONSUMER_KEY']
+        CONSUMER_SECRET = current_app.config['CONSUMER_SECRET']
 
-    TOKEN = current_app.config.get('TOKEN')
-    TOKEN_SECRET = current_app.config.get('TOKEN_SECRET')
-    CONSUMER_KEY = current_app.config.get('CONSUMER_KEY')
-    CONSUMER_SECRET = current_app.config.get('CONSUMER_SECRET')
+        location = os.path.dirname(os.path.realpath(__file__))
+        args = []
 
-    location = os.path.dirname(os.path.realpath(__file__))
-    args = []
+        if 'background' in run_mode:
+            args.append('nohup')
 
-    if 'background' in run_mode:
-        args.append('nohup')
+        args.extend(('python',
+                     current_app.config.get('BASE_DIR')+ '/utils/open_stream.py',
+                     '-t=' + TOKEN,
+                     '-ts=' + TOKEN_SECRET,
+                     '-ck=' + CONSUMER_KEY,
+                     '-cs=' + CONSUMER_SECRET,
+                     '-tt=' + hashtags))
 
-    args.extend(('python',
-                 current_app.config.get('BASE_DIR')+ '/utils/open_stream.py',
-                 '-t=' + TOKEN,
-                 '-ts=' + TOKEN_SECRET,
-                 '-ck=' + CONSUMER_KEY,
-                 '-cs=' + CONSUMER_SECRET,
-                 '-tt=' + hashtags))
+        process = Popen(args)
+        pid = process.pid
 
-    process = Popen(args)
-    pid = process.pid
-
-    # This will kill the subprocess if app crashes
-    atexit.register(process.terminate)
-
-    return pid
+        # This will kill the subprocess if app crashes
+        atexit.register(process.terminate)
+        current_app.logger.info('Stream with hashtag "' + hashtags + '" is now opened.')
+        return pid
+    else:
+        current_app.logger.info('Stream with hashtag "' + hashtags + '" is already opened.')
 
 def get_open_streams():
     """
@@ -84,14 +85,21 @@ def kill_stream(pid=None):
     stdout = sub_proc.stdout.read()
 
     if stderr:
-        return 'Process "%s" does not exist!' % pid
+        current_app.logger.info('Process "' + pid + '" does not exist.')
+        # return 'Process "%s" does not exist!' % pid
     else:
-        return 'Process "%s" killed!' % pid
+        current_app.logger.info('Process "' + pid + '" killed.')
+        # return 'Process "%s" killed!' % pid
 
+def is_stream_open(hashtags):
+    sub_proc = Popen(['ps', 'aux'], shell=False, stdout=PIPE)
+    for line in sub_proc.stdout:
+        if hashtags in line:
+            return True
+    return False
 
 """
 TODOS:
 - only one stream can be opened per token key / consumer (check which!)
 - if stream already opened, don't make another one
-- error logging & put silen output into log files also
 """

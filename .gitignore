@@ -47,3 +47,4 @@ docs/_build/
 .DS_Store
 *.out
 config.py
+rethinkdb_data/
