@@ -1,14 +1,13 @@
 import os
 import sys
+import atexit
 from subprocess import Popen, PIPE
 import datetime
 import psutil
 import time
 from re import search, split
 
-from flask import Flask
-app = Flask(__name__)
-app.config.from_object('config')
+from flask import current_app
 
 def listen_stream(hashtags, run_mode='normal'):
     """
@@ -17,10 +16,11 @@ def listen_stream(hashtags, run_mode='normal'):
     - normal: you get output into console, not a background process
     """
 
-    TOKEN = app.config.get('TOKEN')
-    TOKEN_SECRET = app.config.get('TOKEN_SECRET')
-    CONSUMER_KEY = app.config.get('CONSUMER_KEY')
-    CONSUMER_SECRET = app.config.get('CONSUMER_SECRET')
+
+    TOKEN = current_app.config.get('TOKEN')
+    TOKEN_SECRET = current_app.config.get('TOKEN_SECRET')
+    CONSUMER_KEY = current_app.config.get('CONSUMER_KEY')
+    CONSUMER_SECRET = current_app.config.get('CONSUMER_SECRET')
 
     location = os.path.dirname(os.path.realpath(__file__))
     args = []
@@ -29,15 +29,19 @@ def listen_stream(hashtags, run_mode='normal'):
         args.append('nohup')
 
     args.extend(('python',
-                location + '/../utils/open_stream.py',
-                '-t=' + TOKEN,
-                '-ts=' + TOKEN_SECRET,
-                '-ck=' + CONSUMER_KEY,
-                '-cs=' + CONSUMER_SECRET,
-                '-tt=' + hashtags))
+                 current_app.config.get('BASE_DIR')+ '/utils/open_stream.py',
+                 '-t=' + TOKEN,
+                 '-ts=' + TOKEN_SECRET,
+                 '-ck=' + CONSUMER_KEY,
+                 '-cs=' + CONSUMER_SECRET,
+                 '-tt=' + hashtags))
 
     process = Popen(args)
     pid = process.pid
+
+    # This will kill the subprocess if app crashes
+    atexit.register(process.terminate)
+
     return pid
 
 def get_open_streams():
@@ -74,7 +78,7 @@ def get_open_streams():
     return proc_list
 
 def kill_stream(pid=None):
-    sub_proc = Popen(['kill', '-9', pid], shell=False, stdout=PIPE, stderr=PIPE)
+    sub_proc = Popen(['kill', pid], shell=False, stdout=PIPE, stderr=PIPE)
 
     stderr = sub_proc.stderr.read()
     stdout = sub_proc.stdout.read()
