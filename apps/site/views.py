@@ -18,6 +18,8 @@ def before_request():
     # db.db_create(constants.DB)
     # db.table_create(constants.DB, constants.USERS_TABLE, primary_key='username')
     # db.table_create(current_app.config['DATABASE'], current_app.config['TWEETS_TABLE'], primary_key='id')
+    # db.table_create(current_app.config['DATABASE'], current_app.config['CLIENTS_TABLE'], primary_key='id')
+
 
 @app.teardown_request
 def teardown_request(exception):
