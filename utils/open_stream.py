@@ -3,8 +3,16 @@ import argparse
 from twitter.stream import TwitterStream, Timeout, HeartbeatTimeout, Hangup
 from twitter.oauth import OAuth
 from twitter.util import printNicely
-from flask import current_app
 from logging import Formatter, FileHandler, getLogger, ERROR
+from rethinkdb.errors import RqlRuntimeError, RqlDriverError
+from rethinkdb import now
+from passlib.hash import sha256_crypt
+import json
+import os, sys
+sys.path.append(os.path.abspath(''))
+import helpers.rethinkdb as db
+from config import DATABASE, TWEETS_TABLE
+
 
 def get_log(name):
     logger = getLogger('Stream')
@@ -63,6 +71,12 @@ def main():
         else:
             tweet_iter = stream.statuses.sample()
 
+    # Connect to RethinkDB
+    try:
+        db.connect()
+    except RqlDriverError:
+        log.error('Couldn\'t connect to database.')
+
     # Iterate over the sample stream.
     for tweet in tweet_iter:
         # You must test that your tweet has text. It might be a delete or data message.
@@ -75,7 +89,7 @@ def main():
         elif tweet is Hangup:
             log.error('Hangup')
         elif tweet.get('text'):
-            # TODO: Call a function that will save tweet info into RethinkDB
+            db.insert(DATABASE, TWEETS_TABLE, tweet)
             printNicely(tweet['text'])
         else:
             log.error('Some data ' + str(tweet))

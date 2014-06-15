@@ -1,5 +1,5 @@
 from . import site as app
-from flask import Flask, redirect, url_for, g, jsonify, render_template, request, abort, session
+from flask import Flask, redirect, url_for, g, jsonify, render_template, request, abort, session, current_app
 from helpers import rethinkdb as db
 from rethinkdb.errors import RqlRuntimeError, RqlDriverError
 from rethinkdb import now
@@ -17,7 +17,7 @@ def before_request():
     # just for setup (this needs to be moved and checked elsewhere more conveniente)
     # db.db_create(constants.DB)
     # db.table_create(constants.DB, constants.USERS_TABLE, primary_key='username')
-    # db.table_create(constants.DB, constants.GAMES_TABLE)
+    # db.table_create(current_app.config['DATABASE'], current_app.config['TWEETS_TABLE'], primary_key='id')
 
 @app.teardown_request
 def teardown_request(exception):

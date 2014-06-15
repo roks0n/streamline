@@ -32,5 +32,5 @@ def close_stream(pid):
 @app.route('/open_stream/<string:hashtags>')
 @login_required
 def open_stream(hashtags):
-    listen_stream(hashtags, 'background')
+    listen_stream(hashtags, 'normal')
     return redirect(url_for('admin.index'))
