@@ -1,10 +1,20 @@
 from __future__ import print_function
-
 import argparse
-
 from twitter.stream import TwitterStream, Timeout, HeartbeatTimeout, Hangup
 from twitter.oauth import OAuth
 from twitter.util import printNicely
+from flask import current_app
+from logging import Formatter, FileHandler, getLogger, ERROR
+
+def get_log(name):
+    logger = getLogger('Stream')
+    logger.setLevel(ERROR)
+    file_handler = FileHandler('var/logs/stream.log')
+    file_handler.setFormatter(Formatter("%(asctime)-15s %(name)s [%(levelname)s] - %(message)s"))
+    logger.addHandler(file_handler)
+    return logger
+
+log = get_log(__name__)
 
 
 def parse_arguments():
@@ -22,6 +32,7 @@ def parse_arguments():
     parser.add_argument('-nb', '--no-block', action='store_true', help='Set stream to non-blocking.')
     parser.add_argument('-tt', '--track-keywords', help='Search the stream for specific text.')
     return parser.parse_args()
+
 
 def main():
     args = parse_arguments()
@@ -54,26 +65,21 @@ def main():
 
     # Iterate over the sample stream.
     for tweet in tweet_iter:
-        # You must test that your tweet has text. It might be a delete
-        # or data message.
+        # You must test that your tweet has text. It might be a delete or data message.
         if tweet is None:
-            printNicely("-- None --")
+            log.error('None')
         elif tweet is Timeout:
-            printNicely("-- Timeout --")
+            log.error('Timeout')
         elif tweet is HeartbeatTimeout:
-            printNicely("-- Heartbeat Timeout --")
+            log.error('Heartbeat Timeout')
         elif tweet is Hangup:
-            printNicely("-- Hangup --")
+            log.error('Hangup')
         elif tweet.get('text'):
+            # TODO: Call a function that will save tweet info into RethinkDB
             printNicely(tweet['text'])
         else:
-            printNicely("-- Some data: " + str(tweet))
+            log.error('Some data ' + str(tweet))
+
 
 if __name__ == '__main__':
     main()
-
-
-"""
-TODOS:
-- Save silent outputs to log
-"""

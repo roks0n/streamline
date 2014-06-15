@@ -22,48 +22,57 @@
 
         <div class="container">
 
-            <h1>siteIndex</h1>
-
             <nav class="navbar navbar-default" role="navigation">
                 <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Streamline</a>
-                </div>
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{{ url_for('site.index') }}">Streamline</a>
+                    </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <form class="navbar-form navbar-right" role="login" method="POST" action="{{ url_for('site.login') }}">
-                        <div class="form-group">
-                            <input type="text" name="username" class="form-control" placeholder="Username">
-                            <input type="password" name="password" class="form-control" placeholder="Password">
-                        </div>
-                        <button type="submit" class="btn btn-default">Login</button>
-                    </form>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Link</a></li>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <!-- <form class="navbar-form navbar-right" role="login" method="POST" action="{{ url_for('site.login') }}">
+                            <div class="form-group">
+                                <input type="text" name="username" class="form-control" placeholder="Username">
+                                <input type="password" name="password" class="form-control" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-default">Login</button>
+                        </form> -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Pricing</a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+                                <div class="dropdown-menu" style="padding: 15px">
+                                    <!-- Login form here -->
+                                    <form class="form" role="login" method="POST" action="{{ url_for('site.login') }}">
+                                        <input id="user_username" style="margin-bottom: 15px;" type="text" name="username" placeholder="Username" />
+                                        <input id="user_password" style="margin-bottom: 15px;" type="password" name="password" placeholder="Password" />
+                                        <input class="btn btn-primary" style="float: right;" type="submit" name="commit" value="Sign In" />
+                                    </form>
+                                </div>
                             </li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
             </nav>
 
-            {% block content %}{% endblock %}
+            {% block content %}
+            <div class="jumbotron">
+                <h1>Engage your visitors</h1>
+                <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+                <p>
+                  <a class="btn btn-lg btn-primary" href="{{ url_for('site.login') }}" role="button">Try it out »</a>
+                </p>
+            </div>
+            {% endblock %}
 
         </div>
 

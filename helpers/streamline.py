@@ -8,6 +8,7 @@ import time
 from re import search, split
 from flask import current_app
 
+
 def listen_stream(hashtags, run_mode='normal'):
     """
     run_mode:
@@ -40,10 +41,8 @@ def listen_stream(hashtags, run_mode='normal'):
 
         # This will kill the subprocess if app crashes
         atexit.register(process.terminate)
-        current_app.logger.info('Stream with hashtag "' + hashtags + '" is now opened.')
         return pid
-    else:
-        current_app.logger.info('Stream with hashtag "' + hashtags + '" is already opened.')
+
 
 def get_open_streams():
     """
@@ -78,6 +77,7 @@ def get_open_streams():
 
     return proc_list
 
+
 def kill_stream(pid=None):
     sub_proc = Popen(['kill', pid], shell=False, stdout=PIPE, stderr=PIPE)
 
@@ -101,5 +101,4 @@ def is_stream_open(hashtags):
 """
 TODOS:
 - only one stream can be opened per token key / consumer (check which!)
-- if stream already opened, don't make another one
 """
