@@ -1,14 +1,19 @@
 #!flask/bin/python
 from flask import Flask
-from apps.portal import portal
+from apps.admin import admin
+from apps.site import site
+from apps.the_wall import the_wall
 import logging
 
 
 app = Flask(__name__)
-
-app.register_blueprint(portal)
-
 app.config.from_object('config')
+
+
+# Blueprints
+app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint(the_wall, url_prefix='/wall')
+app.register_blueprint(site, url_prefix='')
 
 # Logging
 file_handler = logging.FileHandler(app.config['BASE_DIR'] + '/var/logs/debug.log')

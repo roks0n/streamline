@@ -2,57 +2,44 @@
 
 {% block title %}Streamline ADMIN{% endblock %}
 
-{% block navbar %}Streamline ADMIN{% endblock %}
-
-{% block content %}
-
+{% block navigation %}
     <div class="row">
-        <div class="col-md-6">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Client</th>
-                        <th>#hashtags</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for stream in streams %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ stream.client }}</td>
-                        <td>{{ stream.hashtags }}</td>
-                        <td><a href="{{ url_for('portal.open_stream', hashtags=stream.hashtags) }}" class="btn btn-success">Listen</a>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Company</th>
-                        <th>Time started</th>
-                        <th>#hashtags</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for proc in procs %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ proc.pid }}</td>
-                        <td>{{ proc.start }}</td>
-                        <td>{{ proc.hashtags }}</td>
-                        <td><a href="{{ url_for('portal.close_stream', pid=proc.pid) }}" class="btn btn-danger">Close</a>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="col-md-12">
+
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Streamline</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="{{ url_for('admin.index')}}">Dashboard</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            <!-- /.navbar-collapse -->
+            </nav>
         </div>
     </div>
+{% endblock %}
 
+{% block content %}
 {% endblock %}

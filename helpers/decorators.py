@@ -6,7 +6,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'username' not in session:
-            return redirect(url_for('portal.login', _external=True, next=request.url))
+            return redirect(url_for('site.login', _external=True, next=request.url))
         return f(*args, **kwargs)
 
     return decorated_function
@@ -15,8 +15,8 @@ def login_required(f):
 def guest_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'username' in session:
-            return redirect(url_for('portal.index'))
+        if session.get('username'):
+            return redirect(url_for('site.index'))
         return f(*args, **kwargs)
 
     return decorated_function
