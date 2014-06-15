@@ -11,38 +11,15 @@ from flask import current_app
 @login_required
 def index():
     # Check for user session
-    if session.get('username'):
-        streams_data = [{
-            'client': 'Hud company d.o.o.',
-            'hashtags': '#slovenia, #slo'
-        },
-        {
-            'client': 'Facebook',
-            'hashtags': '#facebook, #fb'
-        }]
-        return render_template('admin/dashboard.html', streams=streams_data, procs=get_open_streams())
-
-    # Render login template if no user session
-    # return render_template('login.html')
-    return render_template('adminIndex.html')
-
-
-# @app.route('/dashboard/')
-# def adminIndex():
-#     # Check for user session
-#     if session.get('username'):
-#         streams_data = [{
-#             'client': 'Hud company d.o.o.',
-#             'hashtags': '#slovenia, #slo'
-#         },
-#         {
-#             'client': 'Facebook',
-#             'hashtags': '#facebook, #fb'
-#         }]
-#         return render_template('admin/dashboard.html', streams=streams_data, procs=get_open_streams())
-
-#     # Render login template if no user session
-#     return render_template('login.html')
+    streams_data = [{
+        'client': 'Hud company d.o.o.',
+        'hashtags': '#slovenia, #slo'
+    },
+    {
+        'client': 'Facebook',
+        'hashtags': '#facebook, #fb'
+    }]
+    return render_template('adminIndex.html', streams=streams_data, procs=get_open_streams())
 
 
 @app.route('/close_stream/<string:pid>')

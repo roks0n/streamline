@@ -24,7 +24,56 @@
 
             <h1>adminIndex</h1>
 
-            {% block content %}{% endblock %}
+            {% block content %}
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Client</th>
+                                <th>#hashtags</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stream in streams %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ stream.client }}</td>
+                                <td>{{ stream.hashtags }}</td>
+                                <td><a href="{{ url_for('admin.open_stream', hashtags=stream.hashtags) }}" class="btn btn-success">Listen</a>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Company</th>
+                                <th>Time started</th>
+                                <th>#hashtags</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for proc in procs %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ proc.pid }}</td>
+                                <td>{{ proc.start }}</td>
+                                <td>{{ proc.hashtags }}</td>
+                                <td><a href="{{ url_for('admin.close_stream', pid=proc.pid) }}" class="btn btn-danger">Close</a>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endblock %}
 
         </div>
 
