@@ -89,6 +89,7 @@ def main():
         elif tweet is Hangup:
             log.error('Hangup')
         elif tweet.get('text'):
+            tweet['stream_id'] = '1234567890'  # TODO: add that stream_id gets passed to open_stream.py
             db.insert(DATABASE, TWEETS_TABLE, tweet)
             printNicely(tweet['text'])
         else:

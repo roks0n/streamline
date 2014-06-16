@@ -24,7 +24,17 @@
 
             <h1>wallIndex</h1>
 
-            {% block content %}{% endblock %}
+            {% block content %}
+            <ul>
+                {% for tweet in tweets %}
+                <li>
+                    <h6>{{ tweet.id }}</h6>
+                    <p>{{ tweet.user.screen_name }}: {{ tweet.text }}</p>
+                </li>
+
+                {% endfor %}
+            </ul>
+            {% endblock %}
 
         </div>
 

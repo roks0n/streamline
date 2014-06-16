@@ -68,9 +68,21 @@ def get_all(db_name, table_name):
     return items
 
 
-def get_filter(db_name, table_name, query):
+def get_filter(db_name, table_name, query, limit=None, order_by=None, sort_order='desc'):
     items = []
-    for x in r.db(db_name).table(table_name).filter(query).run(conn):
+
+    if limit:
+        if order_by:
+            if 'asc' in sort_order:
+                query = r.db(db_name).table(table_name).filter(query).order_by(r.asc(order_by)).limit(limit).run(conn)
+            else:
+                query = r.db(db_name).table(table_name).filter(query).order_by(r.desc(order_by)).limit(limit).run(conn)
+        else:
+            query = r.db(db_name).table(table_name).filter(query).limit(limit).run(conn)
+    else:
+        query = r.db(db_name).table(table_name).filter(query).run(conn)
+
+    for x in query:
         items.append(x)
     return items
 
