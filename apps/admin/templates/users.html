@@ -1,0 +1,37 @@
+{% extends "adminIndex.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th>Date created</th>
+                        <th>Active</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.type }}</td>
+                        <td>{{ user.date_created.strftime('%d.%m.%Y %H:%I') }}</td>
+                        <td>{{ user.is_active }}</td>
+                        <td>
+                            <a href="#" class="btn btn-success">Edit</a>
+                            <a href="#" class="btn btn-danger">Deactivate</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
