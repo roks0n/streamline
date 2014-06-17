@@ -43,13 +43,10 @@ def signup():
         username = request.form.get('username')
         password = request.form.get('passwd')
 
-        print request.form
-
         if db.username_exist(username):
             return dict(error=True)
         if db.email_exist(email):
             return dict(error=True)
-
 
         hash = sha256_crypt.encrypt(password)
 
@@ -79,10 +76,12 @@ def login():
 
         if username and password:
             hash = db.get_password(username)
+            role = db.get_role(username)
             if sha256_crypt.verify(password, hash):
                 session['username'] = username
-                # TODO: fetch user role aka. type and put it in session
-                session['role'] = 'admin'
+                session['role'] = role
+        if 'admin' in role:
+            return redirect(url_for('admin.index'))
         return redirect(url_for('site.login'))
 
 

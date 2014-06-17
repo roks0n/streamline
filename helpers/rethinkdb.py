@@ -111,5 +111,23 @@ def create_user(user):
     return insert(current_app.config['DATABASE'], current_app.config['USER_TABLE'], user)
 
 
+def get_user_data(username):
+    return get(current_app.config['DATABASE'], current_app.config['USER_TABLE'], username)
+
+
 def get_password(username):
     return get(current_app.config['DATABASE'], current_app.config['USER_TABLE'], username)['password']
+
+
+def get_role(username):
+    return get(current_app.config['DATABASE'], current_app.config['USER_TABLE'], username)['type']
+
+
+def delete_user(username):
+    return r.db(current_app.config['DATABASE']).table(current_app.config['USER_TABLE']).get(username).delete().run(conn)
+
+
+def update_user(username, email, role, password=None):
+    if password:
+        return r.db(current_app.config['DATABASE']).table(current_app.config['USER_TABLE']).get(username).update({ 'email': email, 'type': role, 'password': password }).run(conn)
+    return r.db(current_app.config['DATABASE']).table(current_app.config['USER_TABLE']).get(username).update({ 'email': email, 'type': role }).run(conn)
