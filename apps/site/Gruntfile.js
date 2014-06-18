@@ -1,3 +1,21 @@
 module.exports = function(grunt) {
-  // Do grunt-related things in here
+
+    //Initializing the configuration object
+      grunt.initConfig({
+
+        // Task configuration
+        concat: {
+          //...
+        },
+
+        uglify: {
+          //...
+        }
+
+      });
+
+    // Plugin loading
+
+    // Task definition
+
 };
