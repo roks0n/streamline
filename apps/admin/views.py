@@ -1,8 +1,6 @@
 """
 TODO:
 - Activate/Deactivate account
-- Edit account
-- Add account
 """
 
 from . import admin as app

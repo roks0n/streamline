@@ -1,7 +1,8 @@
 from flask import Blueprint, session, redirect, url_for
-import views
 
 admin = Blueprint('admin', __name__, static_folder='static', template_folder='templates')
+
+import views
 
 
 @admin.before_request
