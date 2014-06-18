@@ -62,10 +62,7 @@ def get(db_name, table_name, id):
 
 
 def get_all(db_name, table_name):
-    items = []
-    for x in r.db(db_name).table(table_name).run(conn):
-        items.append(x)
-    return items
+    return r.db(db_name).table(table_name).run(conn)
 
 
 def get_filter(db_name, table_name, query, limit=None, order_by=None, sort_order='desc'):
