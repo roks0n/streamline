@@ -1,6 +1,7 @@
 {
   "name": "streamline-site",
   "dependencies": {
-    "jQuery": "~2.1.1"
+    "jQuery": "~2.1.1",
+    "requirejs": "~2.1.14"
   }
 }
