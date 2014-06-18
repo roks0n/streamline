@@ -1,0 +1,13 @@
+<div class="tweet" data-twid="{{ tweet.id }}">
+    <div class="avatar">
+        <img src="{{ tweet.user.profile_image_url }}">
+    </div>
+    <div class="body">
+        <h1>{{ tweet.user.name }} <span class="twhandle">@{{ tweet.user.screen_name }}</span></h1>
+        <!-- <span class="time">12:15 | 9. april 2014</span> -->
+        <p>{{ tweet.text }} <!-- <img style="width: 100%; max-width: 400px; display: block;" src="http://static2.businessinsider.com/image/52b88495eab8ea3f663fafb0-1200/and-during-a-trip-to-london-for-an-nbc-interview-they-took-a-picture-with-the-famous-platform-9-at-kings-cross-station-kings-cross-installed-an-actual-9-sign-and-a-half-trolley-lodged-in-a-wall-so-that-every-fan-could-feel-like-a-young-wizard-murad-explained.jpg"> -->
+        {% if tweet.entities.media %}
+            <img style="width: 100%; max-width: 400px; display: block;" src="{{ tweet.entities.media.media_url }}"></p>
+        {% endif %}
+    </div>
+</div>
