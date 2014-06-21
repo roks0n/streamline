@@ -15,11 +15,12 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    optimize: "none",
-                    baseUrl: "static/",
-                    mainConfigFile: "static/requreJSconfig.js",
-                    name: "main", // assumes a production build using almond
-                    out: "static/optimized.js"
+                    appDir: 'frontend/js/',
+                    baseUrl: './',
+                    dir: 'static/js/req/',
+                    optimize: 'none',
+                    mainConfigFile: 'frontend/requireJSconfig.js',
+                    name: 'site/main' // todo: instead of a name, make modules work!
                 }
             }
         },
@@ -31,9 +32,9 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'static/',
+                    cwd: 'frontend/css/site/',
                     src: ['*.scss', '*.sass'], // Feel free to remove a format if you do not use it.
-                    dest: 'static',
+                    dest: 'apps/site/static',
                     ext: '.css'
                 }]
             }
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
 
         watch: {
             css: {
-                files: 'static/{,*/}*.{scss,sass}',
+                files: 'frontend/css/{,*/}*.{scss,sass}',
                 tasks: ['sass']
             }
         }

@@ -2075,7 +2075,7 @@ var requirejs, require, define;
     req(cfg);
 }(this));
 
-define("../bower_components/requirejs/require", function(){});
+define("../../../bower_components/requirejs/require", function(){});
 
 /*!
  * jQuery JavaScript Library v2.1.1
@@ -11282,5 +11282,5 @@ require(['jquery'], function($){
     });
 });
 
-define("main", function(){});
+define("site/main", function(){});
 

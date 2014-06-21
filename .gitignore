@@ -50,3 +50,4 @@ config.py
 rethinkdb_data/
 bower_components/
 .sass-cache
+build.txt
