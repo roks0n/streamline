@@ -1,6 +1,7 @@
 require.config({
     paths: {
-        'jquery': '../../bower_components/jQuery/dist/jquery',
+        require: '../../bower_components/requirejs/require',
+        jquery: '../../bower_components/jQuery/dist/jquery',
     },
     shim: {
         'jquery': {
