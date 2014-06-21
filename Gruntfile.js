@@ -20,7 +20,11 @@ module.exports = function(grunt) {
                     dir: 'static/js/req/',
                     optimize: 'none',
                     mainConfigFile: 'frontend/requireJSconfig.js',
-                    name: 'site/main' // todo: instead of a name, make modules work!
+                    // name: 'site/main' // todo: instead of a name, make modules work!
+                    modules: [{
+                        name: 'site/main',
+                        include: ['../../../bower_components/requirejs/require'] // todo: how to make this work on all modules w/o adding it here?
+                    }]
                 }
             }
         },
