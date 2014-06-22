@@ -2,6 +2,7 @@
   "name": "streamline-site",
   "dependencies": {
     "jQuery": "~2.1.1",
-    "requirejs": "~2.1.14"
+    "requirejs": "~2.1.14",
+    "bootstrap-sass-official": "~3.1.1+2"
   }
 }

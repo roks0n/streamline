@@ -18,12 +18,13 @@ module.exports = function(grunt) {
                 options: {
                     appDir: 'frontend/js/',
                     baseUrl: './',
-                    dir: 'static/js/req/',
+                    dir: 'compressed/',
                     optimize: 'none',
                     mainConfigFile: 'frontend/requireJSconfig.js',
                     modules: [{
+                        // SITE BLUEPRINT
                         name: 'site/main',
-                        include: ['require'] // todo: how to make this work on all modules w/o adding it here?
+                        include: ['../bower_components/requirejs/require']
                     }]
                 }
             }
@@ -32,13 +33,17 @@ module.exports = function(grunt) {
         sass: {
             dev: {
                 options: {
-                    style: 'expanded' //Set your prefered style for development here.
+                    style: 'expanded', //Set your prefered style for development here.
+                    loadPath: [
+                        'bower_components/bootstrap-sass-official/vendor/assets/stylesheets/'
+                    ],
                 },
                 files: [{
+                    // SITE BLUEPRINT
                     expand: true,
                     cwd: 'frontend/css/site/',
                     src: ['*.scss', '*.sass'], // Feel free to remove a format if you do not use it.
-                    dest: 'apps/site/static',
+                    dest: 'compressed/site',
                     ext: '.css'
                 }]
             }
@@ -62,7 +67,7 @@ module.exports = function(grunt) {
 
     // Task definition
     grunt.registerTask('default', [
-        'sass',
+        'sass:dev',
         'watch'
     ]);
 
